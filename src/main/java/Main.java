@@ -17,7 +17,7 @@ public class Main extends HttpServlet {
       throws ServletException, IOException {
 	  
 	  PrintWriter out = resp.getWriter();
-		resp.setContentType("text/plain");
+		resp.setContentType("application/json");
 
 		Enumeration<String> headerNames = req.getHeaderNames();
 
@@ -25,13 +25,13 @@ public class Main extends HttpServlet {
 
 			String headerName = headerNames.nextElement();
 			out.write(headerName);
-			out.write("n");
+			out.write("\n");
 
 			Enumeration<String> headers = req.getHeaders(headerName);
 			while (headers.hasMoreElements()) {
 				String headerValue = headers.nextElement();
 				out.write("t" + headerValue);
-				out.write("n");
+				out.write("\n");
 			}
 
 		}

@@ -25,8 +25,6 @@ public class Yelp {
 	public Yelp() {
 		service = new ServiceBuilder().provider(YelpOAuth.class).apiKey(consumerKey).apiSecret(consumerSecret).build();
 		accessToken = new Token(token, tokenSecret);
-
-		System.out.println(this.searchForBusinessesByLocation("food", "Philadelphia, PA"));
 	}
 
 	public String searchForBusinessesByLocation(String term, String location) {
