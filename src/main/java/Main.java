@@ -1,54 +1,43 @@
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.sql.*;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
 public class Main extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+	  
+	  PrintWriter out = resp.getWriter();
+		resp.setContentType("text/plain");
 
-	  resp.getWriter().println(req.getRequestURI());
-  }
+		Enumeration<String> headerNames = req.getHeaderNames();
 
-  private void showDatabase(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-    Connection connection = null;
-    try {
-      connection = getConnection();
+		while (headerNames.hasMoreElements()) {
 
-      Statement stmt = connection.createStatement();
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-      stmt.executeUpdate("INSERT INTO ticks VALUES (now())");
-      ResultSet rs = stmt.executeQuery("SELECT tick FROM ticks");
+			String headerName = headerNames.nextElement();
+			out.write(headerName);
+			out.write("n");
 
-      String out = "Hello!\n";
-      while (rs.next()) {
-          out += "Read from DB: " + rs.getTimestamp("tick") + "\n";
-      }
+			Enumeration<String> headers = req.getHeaders(headerName);
+			while (headers.hasMoreElements()) {
+				String headerValue = headers.nextElement();
+				out.write("t" + headerValue);
+				out.write("n");
+			}
 
-      resp.getWriter().print(out);
-    } catch (Exception e) {
-      resp.getWriter().print("There was an error: " + e.getMessage());
-    } finally {
-      if (connection != null) try{connection.close();} catch(SQLException e){}
-    }
-  }
+		}
 
-  private Connection getConnection() throws URISyntaxException, SQLException {
-    URI dbUri = new URI(System.getenv("DATABASE_URL"));
-
-    String username = dbUri.getUserInfo().split(":")[0];
-    String password = dbUri.getUserInfo().split(":")[1];
-    int port = dbUri.getPort();
-
-    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ":" + port + dbUri.getPath();
-
-    return DriverManager.getConnection(dbUrl, username, password);
+		out.close();
+	  
   }
 
   public static void main(String[] args) throws Exception {
