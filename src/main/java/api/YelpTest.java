@@ -23,11 +23,13 @@ public class YelpTest {
 		
 		JSONArray businesses = result.getJSONArray("businesses");
 		JSONObject abusiness = businesses.getJSONObject(0);
+		JSONObject location = abusiness.getJSONObject("location");
 		
 		System.out.println(result);
 		System.out.println(businesses);
 		System.out.println(businesses.length() + " businesses in Center Valley");
 		System.out.println(abusiness);
+		System.out.println(location);
 	}
 
 }

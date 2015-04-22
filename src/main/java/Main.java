@@ -71,6 +71,7 @@ public class Main extends HttpServlet {
 		//use keyword 'businesses'
 		JSONArray businesses = obj.getJSONArray("businesses");
 		
+		//populate parsed array with specific info
 		JSONArray parsed = new JSONArray();
 		for(int i=0; i<businesses.length(); i++) {
 			JSONObject business = businesses.getJSONObject(i);
@@ -78,7 +79,7 @@ public class Main extends HttpServlet {
 			
 			parsedBusiness.put("name", business.get("name"));
 			parsedBusiness.put("snippet_text", business.get("snippet_text"));
-			
+			parsedBusiness.put("location", business.get("location"));
 			parsed.put(parsedBusiness);
 		}
 		
