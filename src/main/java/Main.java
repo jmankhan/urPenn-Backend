@@ -43,19 +43,15 @@ public class Main extends HttpServlet {
 
 		//parse header
 		String request = requestBuilder.toString();
-		JSONObject result = searchRequest(request);
+		String result = searchRequest(request);
 		PrintWriter out = resp.getWriter();
-		out.write(result.toString());
+		out.write(result);
 	}
 
-	public JSONObject searchRequest(String term) {
+	public String searchRequest(String term) {
 		Yelp api = new Yelp();
 		String jsonresult = api.searchForBusinessesByLocation(term, "Allentown, PA");
-		try {
-			return parseJSON(jsonresult);
-		} catch (JSONException e) {e.printStackTrace();}
-
-		return null; 
+		return jsonresult;
 	}
 
 	public JSONObject parseJSON(String json) throws JSONException {
