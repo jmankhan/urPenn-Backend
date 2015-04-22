@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import api.Yelp;
 
@@ -62,10 +60,6 @@ public class Main extends HttpServlet {
 	public String searchRequest(String term) {
 		String jsonresult = api.searchForBusinessesByLocation(term, "Allentown, PA");
 		return jsonresult;
-	}
-
-	public JSONObject parseJSON(String json) throws JSONException {
-		return new JSONObject(json);
 	}
 
 	public static void main(String[] args) throws Exception {
