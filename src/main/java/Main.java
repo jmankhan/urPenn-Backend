@@ -12,11 +12,11 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 public class Main extends HttpServlet {
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
-	  
-	  PrintWriter out = resp.getWriter();
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		PrintWriter out = resp.getWriter();
 		resp.setContentType("application/json");
 
 		Enumeration<String> headerNames = req.getHeaderNames();
@@ -30,23 +30,25 @@ public class Main extends HttpServlet {
 			Enumeration<String> headers = req.getHeaders(headerName);
 			while (headers.hasMoreElements()) {
 				String headerValue = headers.nextElement();
-				out.write("t" + headerValue);
-				out.write("\n");
+				if(headerValue.equals("request")) {
+					out.write("t" + headerValue);
+					out.write("\n");
+				}
 			}
 
 		}
 
 		out.close();
-	  
-  }
 
-  public static void main(String[] args) throws Exception {
-    Server server = new Server(Integer.valueOf(System.getenv("PORT")));
-    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-    context.setContextPath("/");
-    server.setHandler(context);
-    context.addServlet(new ServletHolder(new Main()),"/*");
-    server.start();
-    server.join();
-  }
+	}
+
+	public static void main(String[] args) throws Exception {
+		Server server = new Server(Integer.valueOf(System.getenv("PORT")));
+		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		context.setContextPath("/");
+		server.setHandler(context);
+		context.addServlet(new ServletHolder(new Main()),"/*");
+		server.start();
+		server.join();
+	}
 }
