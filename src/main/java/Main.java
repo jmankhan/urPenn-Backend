@@ -10,36 +10,56 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import api.Yelp;
 
 public class Main extends HttpServlet {
+
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		PrintWriter out = resp.getWriter();
-		resp.setContentType("application/json");
-
+		//setup string to collect request
+		StringBuilder requestBuilder = new StringBuilder();
+		
+		//get request headers
 		Enumeration<String> headerNames = req.getHeaderNames();
-
+		
 		while (headerNames.hasMoreElements()) {
 
 			String headerName = headerNames.nextElement();
+			
+			//find the necessary headers
 			if(headerName.equalsIgnoreCase("request")) {
-				out.write(headerName);
-				out.write("\n");
-
 				Enumeration<String> headers = req.getHeaders(headerName);
 				while (headers.hasMoreElements()) {
-					String headerValue = headers.nextElement();
-					out.write("\t" + headerValue);
-					out.write("\n");
+					
+					//add them to stringbuilder for later parsing
+					requestBuilder.append(headers.nextElement());
 				}
 			}
-
 		}
 
-		out.close();
+		//parse header
+		String request = requestBuilder.toString();
+		JSONObject result = searchRequest(request);
+		PrintWriter out = resp.getWriter();
+		out.write(result.toString());
+	}
 
+	public JSONObject searchRequest(String term) {
+		Yelp api = new Yelp();
+		String jsonresult = api.searchForBusinessesByLocation(term, "Allentown, PA");
+		try {
+			return parseJSON(jsonresult);
+		} catch (JSONException e) {e.printStackTrace();}
+
+		return null; 
+	}
+
+	public JSONObject parseJSON(String json) throws JSONException {
+		return new JSONObject(json);
 	}
 
 	public static void main(String[] args) throws Exception {
