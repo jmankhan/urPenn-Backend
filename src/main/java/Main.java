@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import api.Yelp;
 
@@ -49,19 +51,40 @@ public class Main extends HttpServlet {
 
 		//parse header
 		String request = requestBuilder.toString();
-		String result = searchRequest(request);
-		if(request == null)
-			request = "null";
+		JSONArray result = searchRequest(request);
 		
 		PrintWriter out = resp.getWriter();
-		out.write(result);
+		out.write(result.toString());
 	}
 
-	public String searchRequest(String term) {
+	public JSONArray searchRequest(String term) {
 		String jsonresult = api.searchForBusinessesByLocation(term, "Allentown, PA");
-		return jsonresult;
+		return parseRequest(jsonresult);
 	}
 
+	public JSONArray parseRequest(String result) {
+		
+		//receive an object that contains an array of all businesses found
+		JSONObject obj = new JSONObject(result);
+		
+		//retrieve each one as its own object and parse only name and snippet from it
+		//use keyword 'businesses'
+		JSONArray businesses = obj.getJSONArray("businesses");
+		
+		JSONArray parsed = new JSONArray();
+		for(int i=0; i<businesses.length(); i++) {
+			JSONObject business = businesses.getJSONObject(i);
+			JSONObject parsedBusiness = new JSONObject();
+			
+			parsedBusiness.put("name", business.get("name"));
+			parsedBusiness.put("snippet_text", business.get("snippet_text"));
+			
+			parsed.put(parsedBusiness);
+		}
+		
+		return parsed;
+	}
+	
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(Integer.valueOf(System.getenv("PORT")));
 		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
