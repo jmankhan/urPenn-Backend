@@ -24,14 +24,14 @@ public class Main extends HttpServlet {
 		while (headerNames.hasMoreElements()) {
 
 			String headerName = headerNames.nextElement();
-			out.write(headerName);
-			out.write("\n");
+			if(headerName.equalsIgnoreCase("request")) {
+				out.write(headerName);
+				out.write("\n");
 
-			Enumeration<String> headers = req.getHeaders(headerName);
-			while (headers.hasMoreElements()) {
-				String headerValue = headers.nextElement();
-				if(headerValue.equals("request")) {
-					out.write("t" + headerValue);
+				Enumeration<String> headers = req.getHeaders(headerName);
+				while (headers.hasMoreElements()) {
+					String headerValue = headers.nextElement();
+					out.write("\t" + headerValue);
 					out.write("\n");
 				}
 			}
