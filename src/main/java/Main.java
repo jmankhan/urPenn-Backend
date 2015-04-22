@@ -16,7 +16,15 @@ import org.json.JSONObject;
 import api.Yelp;
 
 public class Main extends HttpServlet {
+	private Yelp api;
 
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		api = new Yelp();
+	}
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -44,12 +52,14 @@ public class Main extends HttpServlet {
 		//parse header
 		String request = requestBuilder.toString();
 		String result = searchRequest(request);
+		if(request == null)
+			request = "null";
+		
 		PrintWriter out = resp.getWriter();
 		out.write(result);
 	}
 
 	public String searchRequest(String term) {
-		Yelp api = new Yelp();
 		String jsonresult = api.searchForBusinessesByLocation(term, "Allentown, PA");
 		return jsonresult;
 	}
