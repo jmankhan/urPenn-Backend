@@ -16,8 +16,8 @@ public class Yelp {
 
 	private static final String consumerKey = "mE1KfEt8iY1-_0NOyh_lIA";
 	private static final String consumerSecret = "8nvy7BCpkyOdgTwIyesb_VNc24c";
-	private static final String token = "P6PLBNNrpUKLiFznuieXwtKtvyNeD-Wm";
-	private static final String tokenSecret = "-gUZAL92gWwZBC0tRWVCPasJC4A";
+	private static final String token = "IKluprwi9bIYxJjIJ8zfdkSXDU4JU6x3";
+	private static final String tokenSecret = "vzCfFekF7aXza2OuZm-zpMOoHaY";
 
 	OAuthService service;
 	Token accessToken;
