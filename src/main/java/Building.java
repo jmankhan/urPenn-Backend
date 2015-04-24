@@ -1,8 +1,10 @@
 
 public class Building {
 
+	private String name;
 	private String absUrl;
 	private String thumbUrl;
+	private String blurb;
 
 	public Building() {
 		this(null, null);
@@ -25,11 +27,32 @@ public class Building {
 		this.thumbUrl = thumb;
 	}
 	
+	public void setBlurb(String blurb) {
+		this.blurb = blurb;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String getAbsUrl() {
 		return this.absUrl;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
 	public String getThumbUrl() {
 		return this.thumbUrl;
+	}
+	
+	public String getBlurb() {
+		return this.blurb;
+	}
+	
+	@Override
+	public String toString() {
+		return name + "\n" + absUrl + "\n" + thumbUrl + "\n" + blurb + "\n"; 
 	}
 }

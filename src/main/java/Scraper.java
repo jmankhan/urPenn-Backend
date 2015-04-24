@@ -48,6 +48,8 @@ public class Scraper {
 				if(building.size() >= 2) {
 					b.setThumbUrl(building.get(0).absUrl("href"));
 					b.setAbsUrl(building.get(1).absUrl("href"));
+					b.setName(building.get(1).text());
+					b.setBlurb(getPByClass(b.getAbsUrl(), "field-item"));
 				}
 
 				allBuildings.add(b);
@@ -111,15 +113,14 @@ public class Scraper {
 	public void saveBuildingsToFile(ArrayList<Building> buildings) {
 		deleteFile("buildings");
 		
-		ArrayList<String> urls = new ArrayList<String>();
+		ArrayList<String> buildingInfo = new ArrayList<String>();
 		for(Building b:buildings) {
-			urls.add(b.getAbsUrl());
-			urls.add(b.getThumbUrl());
+			buildingInfo.add(b.toString());
 		}
 		
 		try {
 			
-			saveToFile("buildings.txt", urls, true);
+			saveToFile("buildings.txt", buildingInfo, true);
 			
 		} catch (FileNotFoundException e) {e.printStackTrace(); System.out.println("saving buildings to file failed");}
 	}
@@ -136,11 +137,12 @@ public class Scraper {
 		BufferedReader in = new BufferedReader(new FileReader(new File(filename)));
 		
 		String line = in.readLine();
-		contents.add(line);
 		while(line != null) {
-			line = in.readLine();
 			contents.add(line);
+			line = in.readLine();
 		}
+		
+		in.close();
 		
 		return contents;
 	}
