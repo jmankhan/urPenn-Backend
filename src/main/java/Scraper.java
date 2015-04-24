@@ -48,8 +48,8 @@ public class Scraper {
 				if(building.size() >= 2) {
 					b.setThumbUrl(building.get(0).absUrl("href"));
 					b.setAbsUrl(building.get(1).absUrl("href"));
-//					b.setName(building.get(1).text());
-//					b.setBlurb(getPByClass(b.getAbsUrl(), "field-item"));
+					b.setName(building.get(1).text());
+					b.setBlurb(getPByClass(b.getAbsUrl(), "field-item"));
 				}
 
 				allBuildings.add(b);
