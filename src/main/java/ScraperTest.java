@@ -97,10 +97,7 @@ public class ScraperTest {
 	
 	@Test
 	public void testElementStuff() throws IOException {
-		Document doc = Jsoup.connect("http://www.facilities.upenn.edu/maps/locations").timeout(10*1000).get();
-		Elements ele = doc.getElementsByClass("field-content");
-		for(Element e:ele) {
-			System.out.println(e.text());
-		}
+		Scraper scraper = new Scraper("http://www.facilities.upenn.edu/maps/locations/fagin-hall-claire-m");
+		System.out.println(scraper.getPageTitle("http://www.facilities.upenn.edu/maps/locations/fagin-hall-claire-m"));
 	}
 }
