@@ -17,8 +17,8 @@ public class Building {
 	public Building(String absUrl, String thumbUrl) {
 		this.absUrl = absUrl;
 		this.thumbUrl = thumbUrl;
-		this.name = "";
-		this.blurb = "";
+		this.name = "name";
+		this.blurb = "blurb";
 	}
 
 	public void setAbsUrl(String abs) {
