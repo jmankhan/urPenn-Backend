@@ -134,7 +134,7 @@ public class Scraper {
 	public ArrayList<String> readFromFile(String filename) throws IOException {
 		
 		ArrayList<String> contents = new ArrayList<String>();
-		BufferedReader in = new BufferedReader(new FileReader(new File(filename)));
+		BufferedReader in = new BufferedReader(new FileReader(filename));
 		
 		String line = in.readLine();
 		while(line != null) {

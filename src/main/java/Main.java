@@ -68,10 +68,11 @@ public class Main extends HttpServlet {
 		//parse header
 //		String request = requestBuilder.toString();
 //		JSONArray result = searchRequest(request);
-
+		PrintWriter out = resp.getWriter();
+		out.println("Welcome to urPenn");
+		
 		ArrayList<String> content = scraper.readFromFile("buildings.txt");
 		
-		PrintWriter out = resp.getWriter();
 		for(String s:content) {
 			out.println(s);
 		}
