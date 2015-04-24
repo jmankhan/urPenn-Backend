@@ -48,7 +48,7 @@ public class Scraper {
 				if(building.size() >= 2) {
 					b.setThumbUrl(building.get(0).absUrl("href"));
 					b.setAbsUrl(building.get(1).absUrl("href"));
-					b.setName(building.get(1).text());
+					b.setName(getPageTitle(b.getAbsUrl()));
 					b.setBlurb(getPByClass(b.getAbsUrl(), "field-item"));
 				}
 
@@ -78,7 +78,18 @@ public class Scraper {
 			return "error";
 		
 	}
+
 	
+	/**
+	 * A simple method that retrieves the title of the page
+	 * @param url String url of page
+	 * @return String title
+	 * @throws IOException if page cannot be accessed
+	 */
+	public String getPageTitle(String url) throws IOException {
+		Document doc = Jsoup.connect(url).timeout(10*1000).get();
+		return doc.title();
+	}
 	/**
 	 * Saves a file of String values delineated by newline
 	 * @param filename String name of file. Will be created if it doesn't exist

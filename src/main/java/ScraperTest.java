@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -90,6 +92,15 @@ public class ScraperTest {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testElementStuff() throws IOException {
+		Document doc = Jsoup.connect("http://www.facilities.upenn.edu/maps/locations").timeout(10*1000).get();
+		Elements ele = doc.getElementsByClass("field-content");
+		for(Element e:ele) {
+			System.out.println(e.text());
 		}
 	}
 }
