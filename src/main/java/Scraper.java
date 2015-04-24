@@ -111,7 +111,7 @@ public class Scraper {
 	 * @param buildings
 	 */
 	public void saveBuildingsToFile(ArrayList<Building> buildings) {
-		deleteFile("buildings");
+		deleteFile("buildings.txt");
 		
 		ArrayList<String> buildingInfo = new ArrayList<String>();
 		for(Building b:buildings) {
