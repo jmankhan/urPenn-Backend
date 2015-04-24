@@ -48,7 +48,7 @@ public class Scraper {
 				if(building.size() >= 2) {
 					b.setThumbUrl(building.get(0).absUrl("href"));
 					b.setAbsUrl(building.get(1).absUrl("href"));
-//					b.setName(getPageTitle(b.getAbsUrl()));
+					b.setName(getPageTitle(b.getAbsUrl()));
 //					b.setBlurb(getPByClass(b.getAbsUrl(), "field-item"));
 				}
 
