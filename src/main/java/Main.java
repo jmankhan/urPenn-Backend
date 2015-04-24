@@ -26,7 +26,6 @@ import api.Yelp;
 public class Main extends HttpServlet {
 	private Yelp api;
 	private Scraper scraper;
-	private ArrayList<Building> buildings;
 	
 	@Override
 	public void init() throws ServletException {
@@ -34,8 +33,11 @@ public class Main extends HttpServlet {
 		api = new Yelp();
 		scraper = new Scraper("http://www.facilities.upenn.edu/maps/locations");
 		try {
-			buildings = scraper.getAllBuildingLinks();
+			ArrayList<Building> buildings = scraper.getAllBuildingLinks();
+			System.out.println(buildings.size() + " buildings");
 			scraper.saveBuildingsToFile(buildings);
+			System.out.println("saved buildings to file");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -48,8 +48,8 @@ public class Scraper {
 				if(building.size() >= 2) {
 					b.setThumbUrl(building.get(0).absUrl("href"));
 					b.setAbsUrl(building.get(1).absUrl("href"));
-					b.setName(building.get(1).text());
-					b.setBlurb(getPByClass(b.getAbsUrl(), "field-item"));
+//					b.setName(building.get(1).text());
+//					b.setBlurb(getPByClass(b.getAbsUrl(), "field-item"));
 				}
 
 				allBuildings.add(b);
@@ -111,8 +111,6 @@ public class Scraper {
 	 * @param buildings
 	 */
 	public void saveBuildingsToFile(ArrayList<Building> buildings) {
-		deleteFile("buildings.txt");
-		
 		ArrayList<String> buildingInfo = new ArrayList<String>();
 		for(Building b:buildings) {
 			buildingInfo.add(b.toString());
