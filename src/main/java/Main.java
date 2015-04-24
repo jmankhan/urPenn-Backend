@@ -72,7 +72,9 @@ public class Main extends HttpServlet {
 		out.println("Welcome to urPenn");
 		
 		ArrayList<String> content = scraper.readFromFile("buildings.txt");
-		
+		if(content.isEmpty() || content == null) 
+			out.println("content is empty");
+		else
 		for(String s:content) {
 			out.println(s);
 		}

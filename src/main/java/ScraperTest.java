@@ -70,4 +70,26 @@ public class ScraperTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testReadFromFile() {
+		Scraper scrape = new Scraper("http//www.upenn.edu");
+		ArrayList<String> content = new ArrayList<String>();
+		content.add("building 1 abs");
+		content.add("building 1 thumb");
+		content.add("building 2 abs");
+		content.add("building 2 thumb");
+		content.add("building 3 abs");
+		content.add("building 3 thumb");
+		
+		try {
+			ArrayList<String> rcontent = scrape.readFromFile("test buildings.txt");
+			for(int i=0; i<content.size(); i++) {
+				assertEquals(content.get(i), rcontent.get(i));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
