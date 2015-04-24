@@ -1,5 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.servlet.ServletException;
@@ -12,17 +16,29 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import api.Yelp;
 
 public class Main extends HttpServlet {
 	private Yelp api;
-
+	private Scraper scraper;
+	private ArrayList<Building> buildings;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		api = new Yelp();
+		scraper = new Scraper("http://www.facilities.upenn.edu/maps/locations");
+		try {
+			buildings = scraper.getAllBuildingLinks();
+			scraper.saveBuildingsToFile(buildings);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -50,11 +66,15 @@ public class Main extends HttpServlet {
 		}
 
 		//parse header
-		String request = requestBuilder.toString();
-		JSONArray result = searchRequest(request);
+//		String request = requestBuilder.toString();
+//		JSONArray result = searchRequest(request);
+
+		ArrayList<String> content = scraper.readFromFile("buildings.txt");
 		
 		PrintWriter out = resp.getWriter();
-		out.write(result.toString());
+		for(String s:content) {
+			out.println(s);
+		}
 	}
 
 	public JSONArray searchRequest(String term) {

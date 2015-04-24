@@ -1,0 +1,6 @@
+building 1 abs
+building 1 thumb
+building 2 abs
+building 2 thumb
+building 3 abs
+building 3 thumb
