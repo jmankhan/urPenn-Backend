@@ -52,7 +52,9 @@ public class Scraper {
 					b.setThumbUrl(it.next().absUrl("href"));
 					
 					if(it.hasNext()) {
-						b.setAbsUrl(it.next().absUrl("href"));
+						Element e = it.next();
+						b.setAbsUrl(e.absUrl("href"));
+						b.setName(parseUrl(b.getAbsUrl()));
 					}
 					allBuildings.add(b);
 				}
@@ -121,11 +123,6 @@ public class Scraper {
 		out.close();
 	}
 
-	public void deleteFile(String filename) {
-		File file = new File(filename);
-		file.delete();
-	}
-
 	/**
 	 * Saves all buildings urls to file
 	 * @param buildings
@@ -165,6 +162,24 @@ public class Scraper {
 		return contents;
 	}
 
+	/**
+	 * Returns the last node value in the url path and converts it to a proper noun case
+	 * @param url
+	 * @return
+	 */
+	public String parseUrl(String url) {
+		int index = url.lastIndexOf("/");
+		String last = url.substring(index, url.length());
+		String[] array = last.split("-");
+		
+		String parsed = "";
+		for(String s:array) {
+			s = s.substring(0, 1).toUpperCase();
+			parsed += s;
+		}
+		
+		return parsed;
+	}
 	/**
 	 * Get current base url as string
 	 * @return String
