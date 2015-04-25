@@ -168,15 +168,18 @@ public class Scraper {
 	 * @return
 	 */
 	public String parseUrl(String url) {
-		int index = url.lastIndexOf("/");
+		int index = url.lastIndexOf("/")+1;
 		String last = url.substring(index, url.length());
 		String[] array = last.split("-");
 		
 		String parsed = "";
 		for(String s:array) {
+			if(s.equalsIgnoreCase("street"))
+				s += ",";
+			
 			String first = s.substring(0, 1).toUpperCase();
 			
-			parsed += first + s.substring(1);
+			parsed += first + s.substring(1) + " ";
 		}
 		
 		return parsed;
