@@ -49,11 +49,12 @@ public class Scraper {
 					Building b = new Building();
 					Element e = it.next();
 					b.setThumbUrl(e.absUrl("href"));
-					String fullname = getPageTitle(b.getAbsUrl());
-					b.setName(fullname);
 					
-					if(it.hasNext())
+					if(it.hasNext()) {
 						b.setAbsUrl(it.next().absUrl("href"));
+						String fullname = getPageTitle(b.getAbsUrl());
+						b.setName(fullname.substring(0, fullname.indexOf('|')));
+					}
 				}
 
 				//go to next page
