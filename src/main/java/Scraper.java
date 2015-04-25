@@ -48,13 +48,14 @@ public class Scraper {
 				if(building.size() >= 2) {
 					b.setThumbUrl(building.get(0).absUrl("href"));
 					b.setAbsUrl(building.get(1).absUrl("href"));
-					b.setName(getPageTitle(b.getAbsUrl()));
+					String fullname = getPageTitle(b.getAbsUrl());
+					b.setName(fullname.substring(0, fullname.indexOf('|')));
 //					b.setBlurb(getPByClass(b.getAbsUrl(), "field-name-field-short-description"));
 				}
 
 				allBuildings.add(b);
 				//go to next page
-				doc = Jsoup.connect("http://www.facilities.upenn.edu/maps/locations?page="+ ++page).get();
+				doc = Jsoup.connect("http://www.facilities.upenn.edu/maps/locations?page="+ ++page).timeout(10*1000).get();
 			}
 		} catch(IOException e) {e.printStackTrace();}
 
