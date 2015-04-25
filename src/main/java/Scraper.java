@@ -69,7 +69,7 @@ public class Scraper {
 	 * @throws IOException if url cannot be accessed
 	 */
 	public String getPByClass(String url, String className) throws IOException {
-		Document doc = Jsoup.connect(url).get();
+		Document doc = Jsoup.connect(url).timeout(10*1000).get();
 		Elements ele = doc.getElementsByClass(className);
 		if(ele.size() > 0) {
 			Element para = ele.select("p").first();

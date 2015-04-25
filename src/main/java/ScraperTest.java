@@ -98,6 +98,6 @@ public class ScraperTest {
 	@Test
 	public void testElementStuff() throws IOException {
 		Scraper scraper = new Scraper("http://www.facilities.upenn.edu/maps/locations/fagin-hall-claire-m");
-		System.out.println(scraper.getPageTitle("http://www.facilities.upenn.edu/maps/locations/fagin-hall-claire-m"));
+		System.out.println(scraper.getPByClass("http://www.facilities.upenn.edu/maps/locations/fagin-hall-claire-m", "field-name-field-short-description"));
 	}
 }
