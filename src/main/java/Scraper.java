@@ -48,7 +48,9 @@ public class Scraper {
 				while(it.hasNext()) {
 					Building b = new Building();
 					Element e = it.next();
-					b.setThumbUrl(e.absUrl("href"));
+					String thumb = e.absUrl("href");
+					if(thumb == null) {thumb = "null";}
+					b.setThumbUrl(thumb);
 					
 					if(it.hasNext()) {
 						b.setAbsUrl(it.next().absUrl("href"));
