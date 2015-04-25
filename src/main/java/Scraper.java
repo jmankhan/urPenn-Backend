@@ -41,16 +41,18 @@ public class Scraper {
 
 				Elements buildingTable = doc.getElementsByClass("view-content");
 
-				Elements building = buildingTable.get(1).getElementsByAttribute("href");
+				Elements buildings = buildingTable.get(1).getElementsByAttribute("href");
 
 				//create Building object and populate it with links
 				Building b = new Building();
-				if(building.size() >= 2) {
-					b.setThumbUrl(building.get(0).absUrl("href"));
-					b.setAbsUrl(building.get(1).absUrl("href"));
-					String fullname = getPageTitle(b.getAbsUrl());
-					b.setName(fullname.substring(0, fullname.indexOf('|')));
-//					b.setBlurb(getPByClass(b.getAbsUrl(), "field-name-field-short-description"));
+				if(buildings.size() >= 2) {
+					for(int i=0; i<buildings.size(); i+=2) {
+						b.setThumbUrl(buildings.get(i).absUrl("href"));
+						b.setAbsUrl(buildings.get(i+1).absUrl("href"));
+						String fullname = getPageTitle(b.getAbsUrl());
+						b.setName(fullname.substring(0, fullname.indexOf('|')));
+						//b.setBlurb(getPByClass(b.getAbsUrl(), "field-name-field-short-description"));
+					}
 				}
 
 				allBuildings.add(b);
@@ -76,14 +78,14 @@ public class Scraper {
 			Element para = ele.select("p").first();
 			if(para.text() == null)
 				return " ";
-			
+
 			return para.text();
 		}
-			return "error";
-		
+		return "error";
+
 	}
 
-	
+
 	/**
 	 * A simple method that retrieves the title of the page
 	 * @param url String url of page
@@ -104,23 +106,23 @@ public class Scraper {
 	public void saveToFile(String filename, ArrayList<String> content, boolean overwrite) throws FileNotFoundException {
 		File file = new File(filename);
 		PrintWriter out = new PrintWriter(new FileOutputStream(file, overwrite));
-		
+
 		if(content == null || content.isEmpty()) {out.close(); return;}
 
 		Iterator<String> it = content.iterator();
-		
+
 		while(it.hasNext()) {
 			out.println(it.next());
 		}
-		
+
 		out.close();
 	}
-	
+
 	public void deleteFile(String filename) {
 		File file = new File(filename);
 		file.delete();
 	}
-	
+
 	/**
 	 * Saves all buildings urls to file
 	 * @param buildings
@@ -130,11 +132,11 @@ public class Scraper {
 		for(Building b:buildings) {
 			buildingInfo.add(b.toString());
 		}
-		
+
 		try {
-			
+
 			saveToFile("buildings.txt", buildingInfo, true);
-			
+
 		} catch (FileNotFoundException e) {e.printStackTrace(); System.out.println("saving buildings to file failed");}
 	}
 
@@ -145,21 +147,21 @@ public class Scraper {
 	 * @throws IOException if file could not be accessed
 	 */
 	public ArrayList<String> readFromFile(String filename) throws IOException {
-		
+
 		ArrayList<String> contents = new ArrayList<String>();
 		BufferedReader in = new BufferedReader(new FileReader(filename));
-		
+
 		String line = in.readLine();
 		while(line != null) {
 			contents.add(line);
 			line = in.readLine();
 		}
-		
+
 		in.close();
-		
+
 		return contents;
 	}
-	
+
 	/**
 	 * Get current base url as string
 	 * @return String

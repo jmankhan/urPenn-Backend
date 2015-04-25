@@ -100,4 +100,12 @@ public class ScraperTest {
 		Scraper scraper = new Scraper("http://www.facilities.upenn.edu/maps/locations/fagin-hall-claire-m");
 		System.out.println(scraper.getPByClass("http://www.facilities.upenn.edu/maps/locations/fagin-hall-claire-m", "field-name-field-short-description"));
 	}
+	
+	@Test
+	public void testBuildings() throws IOException {
+		Document doc = Jsoup.connect("http://www.facilities.upenn.edu/maps/locations").get();
+		Elements buildingTable = doc.getElementsByClass("view-content");
+		Elements buildings = buildingTable.get(1).getElementsByAttribute("href");
+		System.out.println(buildings.size());
+	}
 }
