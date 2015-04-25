@@ -47,16 +47,14 @@ public class Scraper {
 				Iterator<Element> it = buildings.iterator();
 				while(it.hasNext()) {
 					Building b = new Building();
-					Element e = it.next();
-					String thumb = e.absUrl("href");
-					if(thumb == null) {thumb = "null";}
-					b.setThumbUrl(thumb);
+					b.setThumbUrl(it.next().absUrl("href"));
 					
 					if(it.hasNext()) {
 						b.setAbsUrl(it.next().absUrl("href"));
 						String fullname = getPageTitle(b.getAbsUrl());
 						b.setName(fullname.substring(0, fullname.indexOf('|')));
 					}
+					allBuildings.add(b);
 				}
 
 				//go to next page

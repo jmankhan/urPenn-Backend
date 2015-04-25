@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -103,9 +104,21 @@ public class ScraperTest {
 	
 	@Test
 	public void testBuildings() throws IOException {
-		Document doc = Jsoup.connect("http://www.facilities.upenn.edu/maps/locations").get();
+		Document doc = Jsoup.connect("http://www.facilities.upenn.edu/maps/locations?page=12").get();
 		Elements buildingTable = doc.getElementsByClass("view-content");
 		Elements buildings = buildingTable.get(1).getElementsByAttribute("href");
-		System.out.println(buildings.size());
+		Iterator<Element> it = buildings.iterator();
+
+		ArrayList<Building> all = new ArrayList<Building>();
+		while(it.hasNext()) {
+			Building b = new Building();
+			b.setThumbUrl(it.next().absUrl("href"));
+			if(it.hasNext()) {
+				b.setAbsUrl(it.next().absUrl("href"));
+			}
+				
+			all.add(b);
+		}
+		System.out.println(all.size());
 	}
 }
