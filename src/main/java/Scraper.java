@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.JFrame;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -51,6 +53,7 @@ public class Scraper {
 					
 					if(it.hasNext()) {
 						b.setAbsUrl(it.next().absUrl("href"));
+						b.setBlurb(this.getPByClass(b.getAbsUrl(), "field-item"));
 					}
 					allBuildings.add(b);
 				}
@@ -95,6 +98,7 @@ public class Scraper {
 		Document doc = Jsoup.connect(url).timeout(10*1000).get();
 		return doc.title();
 	}
+	
 	/**
 	 * Saves a file of String values delineated by newline
 	 * @param filename String name of file. Will be created if it doesn't exist
