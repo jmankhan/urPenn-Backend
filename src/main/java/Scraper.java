@@ -53,7 +53,6 @@ public class Scraper {
 					
 					if(it.hasNext()) {
 						b.setAbsUrl(it.next().absUrl("href"));
-						b.setBlurb(this.getPByClass(b.getAbsUrl(), "field-item"));
 					}
 					allBuildings.add(b);
 				}

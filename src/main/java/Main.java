@@ -27,10 +27,7 @@ public class Main extends HttpServlet {
 	private Yelp api;
 	private Scraper scraper;
 	
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		api = new Yelp();
+	public Main() {
 		scraper = new Scraper("http://www.facilities.upenn.edu/maps/locations");
 		try {
 			ArrayList<Building> buildings = scraper.getAllBuildingLinks();
@@ -41,6 +38,12 @@ public class Main extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		
 	}
 	
 	@Override
