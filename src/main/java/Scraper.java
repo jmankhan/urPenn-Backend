@@ -174,8 +174,9 @@ public class Scraper {
 		
 		String parsed = "";
 		for(String s:array) {
-			s = s.substring(0, 1).toUpperCase();
-			parsed += s;
+			String first = s.substring(0, 1).toUpperCase();
+			
+			parsed += first + s.substring(1);
 		}
 		
 		return parsed;
