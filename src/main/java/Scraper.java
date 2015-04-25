@@ -49,7 +49,7 @@ public class Scraper {
 					b.setThumbUrl(building.get(0).absUrl("href"));
 					b.setAbsUrl(building.get(1).absUrl("href"));
 					b.setName(getPageTitle(b.getAbsUrl()));
-//					b.setBlurb(getPByClass(b.getAbsUrl(), "field-item"));
+					b.setBlurb(getPByClass(b.getAbsUrl(), "field-item"));
 				}
 
 				allBuildings.add(b);
@@ -73,6 +73,9 @@ public class Scraper {
 		Elements ele = doc.getElementsByClass(className);
 		if(ele.size() > 0) {
 			Element para = ele.select("p").first();
+			if(para.text() == null)
+				return " ";
+			
 			return para.text();
 		}
 			return "error";
