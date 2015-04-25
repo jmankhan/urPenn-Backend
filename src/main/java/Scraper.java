@@ -44,20 +44,15 @@ public class Scraper {
 				Elements buildings = buildingTable.get(1).getElementsByAttribute("href");
 
 				//create Building object and populate it with links
-				if(buildings.size() >= 2) {
-
-					for(int i=0; i<buildings.size()-2; i+=2) {
-						Building b = new Building();
-						
-						b.setThumbUrl(buildings.get(i).absUrl("href"));
-						b.setAbsUrl(buildings.get(i+1).absUrl("href"));
-						String fullname = getPageTitle(b.getAbsUrl());
-						b.setName(fullname.substring(0, fullname.indexOf('|')));
-						//b.setBlurb(getPByClass(b.getAbsUrl(), "field-name-field-short-description"));
-						allBuildings.add(b);
-					}
+				Iterator<Element> it = buildings.iterator();
+				while(it.hasNext()) {
+					Building b = new Building();
+					Element e = it.next();
+					b.setThumbUrl(e.absUrl("href"));
+					b.setAbsUrl(e.absUrl("href"));
+					String fullname = getPageTitle(b.getAbsUrl());
+					b.setName(fullname.substring(0, fullname.indexOf('|')));
 				}
-
 
 				//go to next page
 				doc = Jsoup.connect("http://www.facilities.upenn.edu/maps/locations?page="+ ++page).timeout(10*1000).get();
