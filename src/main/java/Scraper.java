@@ -51,8 +51,6 @@ public class Scraper {
 					
 					if(it.hasNext()) {
 						b.setAbsUrl(it.next().absUrl("href"));
-						String fullname = getPageTitle(b.getAbsUrl());
-						b.setName(fullname.substring(0, fullname.indexOf('|')));
 					}
 					allBuildings.add(b);
 				}

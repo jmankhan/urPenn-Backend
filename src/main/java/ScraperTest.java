@@ -119,6 +119,8 @@ public class ScraperTest {
 				
 			all.add(b);
 		}
-		System.out.println(all.size());
+		for(Building b : all) {
+			System.out.println(b);
+		}
 	}
 }
