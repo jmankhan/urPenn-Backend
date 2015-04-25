@@ -49,7 +49,7 @@ public class Scraper {
 					b.setThumbUrl(building.get(0).absUrl("href"));
 					b.setAbsUrl(building.get(1).absUrl("href"));
 					b.setName(getPageTitle(b.getAbsUrl()));
-					b.setBlurb(getPByClass("http://www.facilities.upenn.edu/maps/locations/fagin-hall-claire-m", "field-name-field-short-description"));
+//					b.setBlurb(getPByClass(b.getAbsUrl(), "field-name-field-short-description"));
 				}
 
 				allBuildings.add(b);
