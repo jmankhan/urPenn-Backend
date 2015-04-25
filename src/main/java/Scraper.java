@@ -44,18 +44,21 @@ public class Scraper {
 				Elements buildings = buildingTable.get(1).getElementsByAttribute("href");
 
 				//create Building object and populate it with links
-				Building b = new Building();
 				if(buildings.size() >= 2) {
-					for(int i=0; i<buildings.size(); i+=2) {
+
+					for(int i=0; i<buildings.size()-2; i+=2) {
+						Building b = new Building();
+						
 						b.setThumbUrl(buildings.get(i).absUrl("href"));
 						b.setAbsUrl(buildings.get(i+1).absUrl("href"));
 						String fullname = getPageTitle(b.getAbsUrl());
 						b.setName(fullname.substring(0, fullname.indexOf('|')));
 						//b.setBlurb(getPByClass(b.getAbsUrl(), "field-name-field-short-description"));
+						allBuildings.add(b);
 					}
 				}
 
-				allBuildings.add(b);
+
 				//go to next page
 				doc = Jsoup.connect("http://www.facilities.upenn.edu/maps/locations?page="+ ++page).timeout(10*1000).get();
 			}
