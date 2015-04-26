@@ -1,3 +1,4 @@
+package main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,10 +32,7 @@ public class Main extends HttpServlet {
 		scraper = new Scraper("http://www.facilities.upenn.edu/maps/locations");
 		try {
 			ArrayList<Building> buildings = scraper.getAllBuildingLinks();
-			System.out.println(buildings.size() + " buildings");
 			scraper.saveBuildingsToFile(buildings);
-			System.out.println("saved buildings to file");
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

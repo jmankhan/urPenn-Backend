@@ -1,3 +1,4 @@
+package tests;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;

@@ -1,3 +1,4 @@
+package main;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,7 +55,7 @@ public class Scraper {
 					if(it.hasNext()) {
 						Element e = it.next();
 						b.setAbsUrl(e.absUrl("href"));
-						b.setName(parseUrl(b.getAbsUrl()));
+						b.setId(parseUrl(b.getAbsUrl()));
 					}
 					allBuildings.add(b);
 				}
